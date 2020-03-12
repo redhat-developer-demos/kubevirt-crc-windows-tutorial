@@ -1,5 +1,0 @@
-export CRC_MACHINE_IMAGE=${HOME}/.crc/machines/crc/crc
-qemu-img resize ${CRC_MACHINE_IMAGE} +80G
-cp ${CRC_MACHINE_IMAGE} ${CRC_MACHINE_IMAGE}.ORIGINAL
-virt-resize --expand /dev/sda3 ${CRC_MACHINE_IMAGE}.ORIGINAL ${CRC_MACHINE_IMAGE}
-rm ${CRC_MACHINE_IMAGE}.ORIGINAL
