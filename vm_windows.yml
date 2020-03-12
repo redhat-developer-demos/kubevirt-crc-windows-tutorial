@@ -1,0 +1,64 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  annotations:
+    name.os.template.kubevirt.io/win2k12r2: Microsoft Windows Server 2012 R2
+  labels:
+    flavor.template.kubevirt.io/large: "true"
+    kubevirt.io/os: win2k12r2
+    os.template.kubevirt.io/win2k12r2: "true"
+    template.kubevirt.ui: openshift_win2k12r2-generic-large
+    vm.kubevirt.io/template: win2k12r2-generic-large
+    workload.template.kubevirt.io/generic: "true"
+    app: windows-app-server
+  name: windows-app-server
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        vm.kubevirt.io/name: windows-app-server
+    spec:
+      domain:
+        clock:
+          timer:
+            hpet:
+              present: false
+            hyperv: {}
+            pit:
+              tickPolicy: delay
+            rtc:
+              tickPolicy: catchup
+          utc: {}
+        devices:
+          disks:
+          - disk:
+              bus: sata
+            name: pvcvolume
+          interfaces:
+          - bridge: {}
+            model: e1000
+            name: default
+        features:
+          acpi: {}
+          apic: {}
+          hyperv:
+            relaxed: {}
+            spinlocks:
+              spinlocks: 8191
+            vapic: {}
+        firmware:
+          uuid: 5d307ca9-b3ef-428c-8861-06e72d69f223
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 8192M
+      networks:
+      - name: default
+        pod: {}
+      terminationGracePeriodSeconds: 0
+      volumes:
+      - name: pvcvolume
+        persistentVolumeClaim:
+          claimName: windows
